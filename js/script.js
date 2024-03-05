@@ -1,10 +1,11 @@
 const gallery = document.getElementById('gallery');
+const searchDiv = document.querySelector('.search-container');
 let employees;
 
 // Fetch employee data and return results array
 async function getEmployees(){
     try {
-        const response = await fetch('https://randomuser.me/api/?results=12');
+        const response = await fetch('https://randomuser.me/api/?results=12&nat=us,gb,ca&exc=login,registered,id');
         if (!response.ok) {
             console.error('Http error, status = ', response.status);
         }
@@ -55,7 +56,7 @@ function showModal(employee){
                 <img class="modal-img" src="${employee.picture.large}" alt="profile picture">
                 <h3 id="name" class="modal-name cap">${employee.name.first} ${employee.name.last}</h3>
                 <p class="modal-text">${employee.email}</p>
-                <p class="modal-text cap">${employee.location.city}</p>
+                <p class="modal-text cap">${employee.location.country}</p>
                 <hr>
                 <p class="modal-text">${employee.cell}</p>
                 <p class="modal-text">${employee.location.street.number} ${employee.location.street.name}, ${employee.location.city}, ${employee.location.state} ${employee.location.postcode}</p>
@@ -78,3 +79,9 @@ gallery.addEventListener('click', e => {
         showModal(foundEmployee);
     }
 });
+
+// Append search bar
+searchDiv.innerHTML = `<form action="#" method="get">
+<input type="search" id="search-input" class="search-input" placeholder="Search...">
+<input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+</form>`;
