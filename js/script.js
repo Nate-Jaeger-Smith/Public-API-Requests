@@ -1,6 +1,7 @@
 const gallery = document.getElementById('gallery');
 let employees;
 
+// Fetch employee data and return results array
 async function getEmployees(){
     try {
         const response = await fetch('https://randomuser.me/api/?results=12');
@@ -8,14 +9,13 @@ async function getEmployees(){
             console.error('Http error, status = ', response.status);
         }
         const employees = await response.json();
-        console.log(employees.results);
-        const employeeArray = employees.results;
-        return employeeArray;
+        return employees.results;
     } catch (error) {
         console.error(new Error('Error in fetching data:', error.message));
     }
 }
 
+// Create and append employee cards to gallery
 async function showEmployees(){
     employees = await getEmployees();
 
@@ -37,10 +37,16 @@ async function showEmployees(){
 }
 showEmployees();
 
+/**
+ * Display a modal with employee information
+ * @param {object} employee - Object containing information on selected employee
+ * 
+ * Clicking the close button removes the modal from the DOM
+ */
 function showModal(employee){
     const modalDiv = document.createElement('div');
-    const DOB = new Date(employee.dob.date);
     modalDiv.classList.add('modal-container');
+    const DOB = new Date(employee.dob.date);
     
     modalDiv.innerHTML = `
         <div class="modal">
@@ -63,9 +69,12 @@ function showModal(employee){
     closeButton.addEventListener('click',() => modalDiv.remove());
 }
 
+// Event listener for click on gallery cards to display modal for the clicked employee
 gallery.addEventListener('click', e => {
     const targetcard = e.target.closest('.card');
-    const targetName = targetcard.querySelector('#name').textContent;
-    const foundEmployee = employees.find( employee => `${employee.name.first} ${employee.name.last}` === targetName);
-    showModal(foundEmployee);
+    if (targetcard) {
+        const targetName = targetcard.querySelector('#name').textContent;
+        const foundEmployee = employees.find( employee => `${employee.name.first} ${employee.name.last}` === targetName);
+        showModal(foundEmployee);
+    }
 });
