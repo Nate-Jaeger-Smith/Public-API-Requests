@@ -85,6 +85,7 @@ searchDiv.innerHTML = `<form action="#" method="get">
                             <input type="search" id="search-input" class="search-input" placeholder="Search...">
                             <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
                         </form>`;
+// Grab search inputs to attach event listeners
 const searchbar = searchDiv.querySelector('#search-input');
 const searchButton = searchDiv.querySelector('#search-submit');
 
