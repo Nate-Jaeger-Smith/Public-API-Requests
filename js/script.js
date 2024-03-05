@@ -63,14 +63,20 @@ function showModal(employee){
                 <p class="modal-text">Birthday: ${DOB.getMonth() + 1} / ${DOB.getDate()} / ${DOB.getFullYear()}</p>
             </div>
         </div>
+        <div class="modal-btn-container">
+            <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+            <button type="button" id="modal-next" class="modal-next btn">Next</button>
+        </div>
     `;
     document.body.appendChild(modalDiv);
 
+    // Add event listeners on the modal
     const closeButton = document.querySelector('#modal-close-btn');
     closeButton.addEventListener('click',() => modalDiv.remove());
+    modalbuttons(modalDiv);
 }
 
-// Event listener for click on gallery cards to display modal for the clicked employee
+// Event listener on gallery to display modal for the clicked employee card
 gallery.addEventListener('click', e => {
     const targetcard = e.target.closest('.card');
     if (targetcard) {
@@ -89,6 +95,10 @@ searchDiv.innerHTML = `<form action="#" method="get">
 const searchbar = searchDiv.querySelector('#search-input');
 const searchButton = searchDiv.querySelector('#search-submit');
 
+/**
+ * Searches for employees based on the value entered in the search bar and updates the gallery accordingly
+ * Clears existing content of the gallery, filters the employees, then displays them or a 'No results found' message
+ */
 function searchEmployees(){
     gallery.innerHTML = '';
     const foundEmployees = employees.filter( employee => {
@@ -111,3 +121,16 @@ function searchEmployees(){
 
 searchButton.addEventListener('click', searchEmployees);
 searchbar.addEventListener('keyup', searchEmployees);
+
+function modalbuttons(modal){
+    const prev = modal.querySelector('#modal-prev');
+    const next = modal.querySelector('#modal-next');
+
+    prev.addEventListener('click', () => {
+        console.log('previous');
+    });
+
+    next.addEventListener('click', () => {
+        console.log('next');
+    });
+}
