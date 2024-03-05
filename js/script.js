@@ -85,9 +85,10 @@ searchDiv.innerHTML = `<form action="#" method="get">
                             <input type="search" id="search-input" class="search-input" placeholder="Search...">
                             <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
                         </form>`;
+const searchbar = searchDiv.querySelector('#search-input');
+const searchButton = searchDiv.querySelector('#search-submit');
 
 function searchEmployees(){
-    const searchbar = searchDiv.querySelector('#search-input');
     gallery.innerHTML = '';
     const foundEmployees = employees.filter( employee => {
         let firstName = employee.name.first.toLowerCase();
@@ -106,5 +107,6 @@ function searchEmployees(){
         showEmployees(foundEmployees);
     }
 }
-const searchButton = searchDiv.querySelector('#search-submit');
+
 searchButton.addEventListener('click', searchEmployees);
+searchbar.addEventListener('keyup', searchEmployees);
