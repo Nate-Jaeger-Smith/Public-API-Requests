@@ -59,7 +59,7 @@ function showModal(employee){
                 <hr>
                 <p class="modal-text">${employee.cell}</p>
                 <p class="modal-text">${employee.location.street.number} ${employee.location.street.name}, ${employee.location.city}, ${employee.location.state} ${employee.location.postcode}</p>
-                <p class="modal-text">Birthday: ${DOB.getMonth()} / ${DOB.getDate()} / ${DOB.getFullYear()}</p>
+                <p class="modal-text">Birthday: ${DOB.getMonth() + 1} / ${DOB.getDate()} / ${DOB.getFullYear()}</p>
             </div>
         </div>
     `;
