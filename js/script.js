@@ -2,25 +2,25 @@ const gallery = document.getElementById('gallery');
 const searchDiv = document.querySelector('.search-container');
 let employees;
 
-// Fetch employee data and return results array
+// Fetch employee data and update them into employees variable
 async function getEmployees(){
     try {
         const response = await fetch('https://randomuser.me/api/?results=12&nat=us,gb,ca&exc=login,registered,id');
         if (!response.ok) {
             console.error('Http error, status = ', response.status);
         }
-        const employees = await response.json();
-        return employees.results;
+        const employeesJSON = await response.json();
+        employees = employeesJSON.results;
     } catch (error) {
         console.error(new Error('Error in fetching data:', error.message));
     }
+     showEmployees(employees);
 }
 
 // Create and append employee cards to gallery
-async function showEmployees(){
-    employees = await getEmployees();
+function showEmployees(array){
 
-    employees.map( employee => {
+    array.map( employee => {
         let html = `
         <div class="card">
             <div class="card-img-container">
@@ -36,7 +36,7 @@ async function showEmployees(){
         gallery.insertAdjacentHTML('beforeend', html);
     });
 }
-showEmployees();
+getEmployees();
 
 /**
  * Display a modal with employee information
@@ -85,3 +85,26 @@ searchDiv.innerHTML = `<form action="#" method="get">
                             <input type="search" id="search-input" class="search-input" placeholder="Search...">
                             <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
                         </form>`;
+
+function searchEmployees(){
+    const searchbar = searchDiv.querySelector('#search-input');
+    gallery.innerHTML = '';
+    const foundEmployees = employees.filter( employee => {
+        let firstName = employee.name.first.toLowerCase();
+        let lastName = employee.name.last.toLowerCase();
+        if (firstName.includes(searchbar.value) || lastName.includes(searchbar.value)) {
+            return true;
+        } else {
+            return false;
+        }
+    });
+    if (foundEmployees.length === 0) {
+        gallery.innerHTML = `<h3>No results found</h3>`;
+    } else if (searchbar.value === '') {
+        showEmployees(employees);
+    } else {
+        showEmployees(foundEmployees);
+    }
+}
+const searchButton = searchDiv.querySelector('#search-submit');
+searchButton.addEventListener('click', searchEmployees);
