@@ -70,10 +70,11 @@ function showModal(employee){
     `;
     document.body.appendChild(modalDiv);
 
-    // Add event listeners on the modal
+    // Add event listeners modal close & next/prev buttons
     const closeButton = document.querySelector('#modal-close-btn');
     closeButton.addEventListener('click',() => modalDiv.remove());
-    modalbuttons(modalDiv);
+   // FIND A BETTER SPOT TO CALL
+    modalbuttons(modalDiv, employees);
 }
 
 // Event listener on gallery to display modal for the clicked employee card
@@ -122,15 +123,34 @@ function searchEmployees(){
 searchButton.addEventListener('click', searchEmployees);
 searchbar.addEventListener('keyup', searchEmployees);
 
-function modalbuttons(modal){
+function modalbuttons(modal, array){
     const prev = modal.querySelector('#modal-prev');
     const next = modal.querySelector('#modal-next');
+    let name = modal.querySelector('#name').textContent;
+    let currentIndex = array.findIndex( obj => {
+        
+        if ( name === `${obj.name.first} ${obj.name.last}`){
+            return true;
+        }
+    });
 
     prev.addEventListener('click', () => {
-        console.log('previous');
+        if (currentIndex === 0) {
+            prev.disabled = true;
+        } else {
+            currentIndex--;
+            modal.remove();
+            showModal(array[currentIndex]);
+        }
     });
 
     next.addEventListener('click', () => {
-        console.log('next');
+        if (currentIndex === array.length -1) {
+            next.disabled = true;
+        } else {
+            currentIndex++;
+            modal.remove();
+            showModal(array[currentIndex]);
+        }
     });
 }
