@@ -117,7 +117,7 @@ function searchEmployees(){
         showEmployees(foundEmployees);
     }
 }
-
+// Add event listeners to searchbar and button
 searchButton.addEventListener('click', searchEmployees);
 searchbar.addEventListener('keyup', searchEmployees);
 
