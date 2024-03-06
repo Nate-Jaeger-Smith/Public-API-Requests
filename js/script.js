@@ -1,6 +1,7 @@
 const gallery = document.getElementById('gallery');
 const searchDiv = document.querySelector('.search-container');
 let employees;
+let modal;
 
 // Fetch employee data and update them into employees variable
 async function getEmployees(){
@@ -47,6 +48,7 @@ getEmployees();
 function showModal(employee){
     const modalDiv = document.createElement('div');
     modalDiv.classList.add('modal-container');
+    modal = modalDiv;
     const DOB = new Date(employee.dob.date);
     
     modalDiv.innerHTML = `
@@ -70,11 +72,11 @@ function showModal(employee){
     `;
     document.body.appendChild(modalDiv);
 
-    // Add event listeners modal close & next/prev buttons
+    // Add event listeners for modal close & next/prev buttons
     const closeButton = document.querySelector('#modal-close-btn');
     closeButton.addEventListener('click',() => modalDiv.remove());
    // FIND A BETTER SPOT TO CALL
-    modalbuttons(modalDiv, employees);
+    modalbuttons(employees);
 }
 
 // Event listener on gallery to display modal for the clicked employee card
@@ -105,11 +107,7 @@ function searchEmployees(){
     const foundEmployees = employees.filter( employee => {
         let firstName = employee.name.first.toLowerCase();
         let lastName = employee.name.last.toLowerCase();
-        if (firstName.includes(searchbar.value) || lastName.includes(searchbar.value)) {
-            return true;
-        } else {
-            return false;
-        }
+        return firstName.includes(searchbar.value) || lastName.includes(searchbar.value);
     });
     if (foundEmployees.length === 0) {
         gallery.innerHTML = `<h3>No results found</h3>`;
@@ -123,16 +121,11 @@ function searchEmployees(){
 searchButton.addEventListener('click', searchEmployees);
 searchbar.addEventListener('keyup', searchEmployees);
 
-function modalbuttons(modal, array){
+function modalbuttons(array){
     const prev = modal.querySelector('#modal-prev');
     const next = modal.querySelector('#modal-next');
-    let name = modal.querySelector('#name').textContent;
-    let currentIndex = array.findIndex( obj => {
-        
-        if ( name === `${obj.name.first} ${obj.name.last}`){
-            return true;
-        }
-    });
+
+    let currentIndex = array.findIndex( obj => `${obj.name.first} ${obj.name.last}` === modal.querySelector('#name').textContent);
 
     prev.addEventListener('click', () => {
         if (currentIndex === 0) {
