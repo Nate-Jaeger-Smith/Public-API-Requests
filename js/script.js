@@ -3,6 +3,15 @@ const searchDiv = document.querySelector('.search-container');
 let employees;
 let modal;
 
+// Append search bar
+searchDiv.innerHTML = `<form action="#" method="get">
+                            <input type="search" id="search-input" class="search-input" placeholder="Search...">
+                            <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+                        </form>`;
+// Grab search inputs to attach event listeners
+const searchbar = searchDiv.querySelector('#search-input');
+const searchButton = searchDiv.querySelector('#search-submit');
+
 // Fetch employee data and update them into employees variable
 async function getEmployees(){
     try {
@@ -17,6 +26,7 @@ async function getEmployees(){
     }
      showEmployees(employees);
 }
+getEmployees();
 
 // Create and append employee cards to gallery
 function showEmployees(array){
@@ -37,7 +47,6 @@ function showEmployees(array){
         gallery.insertAdjacentHTML('beforeend', html);
     });
 }
-getEmployees();
 
 /**
  * Display a modal with employee information
@@ -88,15 +97,6 @@ gallery.addEventListener('click', e => {
         showModal(foundEmployee);
     }
 });
-
-// Append search bar
-searchDiv.innerHTML = `<form action="#" method="get">
-                            <input type="search" id="search-input" class="search-input" placeholder="Search...">
-                            <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
-                        </form>`;
-// Grab search inputs to attach event listeners
-const searchbar = searchDiv.querySelector('#search-input');
-const searchButton = searchDiv.querySelector('#search-submit');
 
 /**
  * Searches for employees based on the value entered in the search bar and updates the gallery accordingly
