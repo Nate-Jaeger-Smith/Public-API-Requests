@@ -15,3 +15,4 @@ This is a simple employee directory web application that fetches random employee
 - Increased border-radius for card elements
 - Added box-shadow for card elements
 - Changed background-color
+- Added a disabled psuedo-selector for modal buttons

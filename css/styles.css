@@ -204,6 +204,10 @@ header h1 {
     transition: .4s ease-out;
   }
   
+  .modal-btn-container .btn:disabled{
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 
 /* ===================================== 
    Media Queries
