@@ -55,6 +55,7 @@ function showEmployees(array){
  * @param {object} employee - Object containing information on selected employee
  * 
  * Clicking the close button removes the modal from the DOM
+ * Clicking "Next" or "Prev" buttons will display modal for appropriate employee
  */
 function showModal(employee){
     const modalDiv = document.createElement('div');
@@ -87,7 +88,7 @@ function showModal(employee){
     const closeButton = document.querySelector('#modal-close-btn');
     closeButton.addEventListener('click',() => modalDiv.remove());
 
-    // Test if function call is from search bar or standard employee list
+    // Tell if function call is from search bar or standard employee list
     foundEmployees ? modalbuttons(foundEmployees) : modalbuttons(employees);
 }
 
