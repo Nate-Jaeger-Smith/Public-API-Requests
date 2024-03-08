@@ -1,7 +1,10 @@
 const gallery = document.getElementById('gallery');
 const searchDiv = document.querySelector('.search-container');
 let employees;
+let foundEmployees;
 let modal;
+
+getEmployees();
 
 // Append search bar
 searchDiv.innerHTML = `<form action="#" method="get">
@@ -26,7 +29,6 @@ async function getEmployees(){
     }
      showEmployees(employees);
 }
-getEmployees();
 
 // Create and append employee cards to gallery
 function showEmployees(array){
@@ -84,8 +86,9 @@ function showModal(employee){
     // Add event listeners for modal close & next/prev buttons
     const closeButton = document.querySelector('#modal-close-btn');
     closeButton.addEventListener('click',() => modalDiv.remove());
-   // FIND A BETTER SPOT TO CALL
-    modalbuttons(employees);
+
+    // Test if function call is from search bar or standard employee list
+    foundEmployees ? modalbuttons(foundEmployees) : modalbuttons(employees);
 }
 
 // Event listener on gallery to display modal for the clicked employee card
@@ -104,7 +107,7 @@ gallery.addEventListener('click', e => {
  */
 function searchEmployees(){
     gallery.innerHTML = '';
-    const foundEmployees = employees.filter( employee => {
+    foundEmployees = employees.filter( employee => {
         let firstName = employee.name.first.toLowerCase();
         let lastName = employee.name.last.toLowerCase();
         return firstName.includes(searchbar.value) || lastName.includes(searchbar.value);
@@ -112,6 +115,7 @@ function searchEmployees(){
     if (foundEmployees.length === 0) {
         gallery.innerHTML = `<h3>No results found</h3>`;
     } else if (searchbar.value === '') {
+        foundEmployees = '';
         showEmployees(employees);
     } else {
         showEmployees(foundEmployees);
