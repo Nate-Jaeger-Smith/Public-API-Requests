@@ -125,6 +125,10 @@ function searchEmployees(){
 searchButton.addEventListener('click', searchEmployees);
 searchbar.addEventListener('keyup', searchEmployees);
 
+/**
+ * Adds event listeners to previous and next buttons in the modal window to navigate through employees array
+ * @param {Array} array - The array of employees to navigate through
+ */
 function modalbuttons(array){
     const prev = modal.querySelector('#modal-prev');
     const next = modal.querySelector('#modal-next');
