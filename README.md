@@ -8,3 +8,10 @@ This is a simple employee directory web application that fetches random employee
 - Users can search for employees by entering their names in the search bar.
 - Clicking on an employee card opens a modal window with more detailed information about the selected employee.
 - The modal window allows users to navigate through the employee list using "Prev" and "Next" buttons.
+- Modal "Prev" and "Next" buttons will navigate through searched results if an employee was searched for.
+
+## Style changes
+
+- Increased border-radius for card elements
+- Added box-shadow for card elements
+- Changed background-color
